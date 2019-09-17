@@ -14,21 +14,20 @@ int main()
 {
 	_asm
 	{
-		mov ebx, 0; //ebx will hold the sum of all the scores
+		mov ebx, 0; //ebx will hold the sum of all the scores (note that calling a function may overwrite eax)
 
 	WhileLoop:
 		call getInput;
-		mov eax, input;
-		cmp eax, -1;
-		je ExitTheLoop; //exit the loop if input==eax==-1
-		add ebx, eax;
-		inc amountOfScores; // amountOfScores is the number we divide by
+		cmp input, -1;
+		je ExitLoop; //exit the loop if input==-1
+		add ebx, input;
+		inc amountOfScores; // amountOfScores is the number we divide by to get the average of the scores
 		jmp WhileLoop; //go back up
 
-	ExitTheLoop:
+	ExitLoop:
 		mov eax, ebx; //move to eax for division
-		cdq;
-		idiv amountOfScores;
+		cdq; //edx:eax = ebx (convert double word to quad word)
+		idiv amountOfScores; //eax = ebx/amountOfScores (edx = ebx%amountOfScores)
 		mov averageScore, eax;
 	}
 

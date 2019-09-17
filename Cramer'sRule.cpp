@@ -40,7 +40,7 @@ int main()
 		mov ax, a;
 		imul f; //Store a*f in dx:ax
 		sub ax, cx; //Store a*f-c*d in dx:ax
-		idiv bx; //divide what's in ax (a*f-c*d) by bx (a*e-b*d)
+		idiv bx; //divide what's in dx:ax (a*f-c*d) by bx (a*e-b*d)
 		mov y, ax;
 
 		//Calculate X = (c*d-b*f)/(a*e-b*d)
@@ -53,7 +53,7 @@ int main()
 		mov ax, c;
 		imul e; //Store c*e in dx:ax
 		sub ax, cx; //Store c*e-b*f in dx:ax
-		idiv bx; //divide what's in ax (c*e-b*f) by bx (a*e-b*d)
+		idiv bx; //divide what's in dx:ax (c*e-b*f) by bx (a*e-b*d)
 		mov x, ax;
 	}
 

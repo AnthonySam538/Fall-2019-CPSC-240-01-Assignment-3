@@ -2,7 +2,7 @@
 
 using namespace std;
 
-short amountOfCustomers, amountOfDrinks, amountOfSandwiches, sandwichSize, total = 0, sodaCost = 2, waterCost = 1, tenInchCost = 3, twelveInchCost = 5;
+short amountOfCustomers, amountOfDrinks, amountOfSandwiches, sandwichSize, total, sodaCost = 2, waterCost = 1, tenInchCost = 3, twelveInchCost = 5;
 char drinkKind;
 
 void getData()
@@ -16,6 +16,11 @@ void getData()
 	cin >> amountOfSandwiches;
 	cout << "Which size? (10/12 inches) ";
 	cin >> sandwichSize;
+}
+
+void displayBill()
+{
+	cout << "\nYour total bill: $" << total << endl;
 }
 
 int main()
@@ -36,7 +41,7 @@ int main()
 	DrinkCost:
 		mov ax, amountOfDrinks; //move amountOfDrinks to ax for multiplication
 		cmp drinkKind, 'S';
-		jne WaterCost; //if it's not (S)oda, skip over SodaCost and go to WaterCost, otherwise keep going
+		jne WaterCost; //if it's not (S)oda, skip over SodaCost and go to WaterCost, otherwise keep going into SodaCost
   //SodaCost:
 		imul sodaCost;
 		jmp SandwichCost; //now skip over WaterCost
@@ -44,10 +49,10 @@ int main()
 		imul waterCost;
 
 	SandWichCost:
-		add total, ax; //add this person's drink cost onto total
+		mov total, ax; //add this person's drink cost onto total
 		mov ax, amountOfSandwiches; //move amountOfSandwiches to ax for multiplication
 		cmp sandwichSize, 10;
-		jne TwelveInchCost; //same logic with the (S)oda
+		jne TwelveInchCost; //same logic with the DrinkCost
   //TenInchCost:
 		imul tenInchCost;
 		jmp Total;
@@ -56,13 +61,12 @@ int main()
 
     Total:
 		add total, ax; //add this person's sandwich cost onto total
+		call displayBill;
 		jmp WhileLoop; //go back up
 
 	ExitWhileLoop:
 
 	}
-
-	cout << "Your total bill: $" << total;
-
+	
 	return 0;
 }
